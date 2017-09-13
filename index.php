@@ -39,12 +39,42 @@ function renameCategories ($FuncLine) {
 			str_replace ('00-00000022','Анальные стимуляторы -> Без вибро',
 			str_replace ('00-00000026','Анальные стимуляторы -> Стимуляторы простаты',
 			str_replace ('00-00000035','Анальные стимуляторы -> Анальные цепочки, шарики',
+			str_replace ('00-00002197','БАД',
+			str_replace ('00-00000049','Вагинальные шарики без вибрации',
 			$FuncLine
-			 ))))))));
+			 ))))))))));
 			
 			return $renameCat;
 	
 }
+
+
+
+
+//функция отображения картинок в галереи
+function imgGallery($func_sumImg,$func_lineCellImg) {
+
+	for ( $fx = 1; $fx < $func_sumImg; $fx++  ) {
+		
+	//trim - убирает пробелы и кавычки вначале и в конце строки
+	$qqqq = str_replace ("\"","",trim($func_lineCellImg[$fx]));
+	
+	print $qqqq;
+	
+	//убираем последний символ - точнее ставим | везде кроме последней картинки
+	$per1 = $func_sumImg - 1;
+	if ( $fx != $per1 ) { print "|"; }
+	
+	}
+	
+	
+	 
+}
+
+
+
+
+
 
 	
 	
@@ -70,9 +100,10 @@ $price = $lineCell[6];
 $priceNacenka = priceNacenka($price,$procent);
 
 
+
 //переименование разделов
 $renameCategories = renameCategories ($line1);
-print $renameCategories;
+// print $renameCategories;
 
 
 
@@ -81,31 +112,40 @@ $lineCellImg = explode ( ",",$lineCell[13] );
 
 $sumImg = count($lineCellImg);
 
-
+//первая картинка
+$firstImg = str_replace ("\"","",trim($lineCellImg[0]));
 
 
 // Основная картинка - ставим символ после картинки + убираем кавычки и пробелы
-print str_replace ("\"","",trim($lineCellImg[0]));
-print "|";
+// print str_replace ("\"","",trim($lineCellImg[0])) . "|";
 
 
+$line2 = $renameCategories . $firstImg . ";";
 
-    for ( $x = 1; $x < $sumImg; $x++  ) {
-		
-	//trim - убирает пробелы и кавычки вначале и в конце строки
-	print str_replace ("\"","",trim($lineCellImg[$x])) . ";" . $priceNacenka;; 
 	
-	
-	//убираем последний символ - точнее ставим | везде кроме последней картинки
-	$aa = $sumImg - 1;
-	if ( $x != $aa ) { print "|"; }
-	
-    }
-	
+
+	//печатаем строку
+	print $line2;
+	//из-за функции imgGallery нельзя сделать одной строкой - функция выпирает вперед
+    print imgGallery($sumImg,$lineCellImg) .";" . $priceNacenka;
 	print "<br>";
 	
 	
+	
+	
+	
+	
+	
+	// отображаем строку с определенным словом
+	
+	//$searchWord = "47021-1MM";
+	
+	//echo stristr($line1, $searchWord, true ); echo stristr($line1, $searchWord );
+	
+	//print ";".$priceNacenka;
 
+
+	
 	
 }
 
